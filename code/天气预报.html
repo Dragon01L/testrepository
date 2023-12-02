@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .search_form {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .form_group {
+            margin-bottom: 20px;
+        }
+
+        .input_txt {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .input_sub {
+            padding: 10px 20px;
+            background-color: #409eff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hotkey {
+            margin-top: 20px;
+        }
+
+        .hotkey a {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .hotkey a:hover {
+            background-color: #409eff;
+            color: #fff;
+        }
+
+        .weather_list {
+            margin: 20px auto;
+            width: 800px;
+        }
+
+        .weather_item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .weather_item .date {
+            flex-basis: 30%;
+        }
+
+        .weather_item .weather,
+        .weather_item .temperature,
+        .weather_item .wind,
+        .weather_item .wind_level {
+            flex-basis: 20%;
+        }
+
+        .weather_item .wind_level {
+            flex-basis: 10%;
+        }
+
+        .weather_item .wind_level i {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .weather_item .wind_level i:nth-child(1) {
+            background-color: #55aaff;
+        }
+
+        .weather_item .wind_level i:nth-child(2) {
+            background-color: #fdd835;
+        }
+
+        .weather_item .wind_level i:nth-child(3) {
+            background-color: #ff9800;
+        }
+
+        .weather_item .wind_level i:nth-child(4) {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="search_form">
+            <div class="form_group">
+                <input type="text" v-model="city" @keyup.enter="searchWeather" class="input_txt" placeholder="请输入查询的天气">
+                <button class="input_sub" @click="searchWeather">搜索</button>
+            </div>
+            <div class="hotkey">
+                <a href="javascript:void(0)" @click="changeCity('北京')">北京</a>
+                <a href="javascript:void(0)" @click="changeCity('上海')">上海</a>
+                <a href="javascript:void(0)" @click="changeCity('广州')">广州</a>
+                <a href="javascript:void(0)" @click="changeCity('深圳')">深圳</a>
+            </div>
+        </div>
+        <ul class="weather_list">
+            <li v-for="item in weatherList" class="weather_item">
+                <div class="date">{{ item.date }}</div>
+                <div class="weather">{{ item.weather }}</div>
+                <div class="temperature">{{ item.temperature }}</div>
+                <div class="wind">{{ item.wind }}</div>
+                <div class="wind_level">
+                    <i :style="{ 'background-color': item.wind_color }"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                city: '',
+                weatherList: []
+            },
+            methods: {
+                searchWeather: function() {
+                    var that = this;
+
+                    axios.get('https://query.asilu.com/weather/weather?action=weather/weather/&city=' +
+                        this.city)
+                        .then(function(response) {
+                            that.weatherList = response.data.list.map(item => ({
+                                date: item.date,
+                                weather: item.weather,
+                                temperature: item.temp,
+                                wind: item.wind,
+                                wind_color: ['#55aaff', '#fdd835', '#ff9800', '#f44336'][item.wind_level - 1]
+                            }));
+                        })
+                        .catch(function(err) {
+                            console.error(err);
+                        });
+                },
+                changeCity: function(city) {
+                    this.city = city;
+                    this.searchWeather();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

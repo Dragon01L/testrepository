@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <script src="./lib/vue2.js"></script>
+  </head>
+  <body>
+    <div id="app" :style="appStyle">
+      <p :style="reYangPStyle">
+        九日齐山登高<br />
+        唐   杜牧 <br />
+        江涵秋影雁初飞，<br />
+        与客携壶上翠微。<br />
+        尘世难逢开口笑，<br />
+        菊花须插满头归。 <br />
+        但将酩酊酬佳节，<br />
+        不用登临恨落晖。<br />
+        古往今来只如此，<br />
+        牛山何必独沾衣。
+      </p>
+    </div>
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {},
+        computed: {
+          appStyle: function() {
+            return {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh"
+            };
+          },
+          reYangPStyle: function() {
+            return {
+              margin: "auto",
+              writingMode: "vertical-rl",
+              textOrientation: "upright",
+              fontFamily: "宋体",
+              fontSize: "20px",
+              color: "#336699"
+            };
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

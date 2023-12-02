@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-for="item in msg" class="tupian">
+            {{item.name}}
+            {{item.price}}
+            <img :src="item.image" alt="" class="image-style">
+        </div>
+    </div>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:[
+                {name:"华为1",image:"./image/华为.jpg",price:"19999元"},
+                {name:"华为2",image:"./image/华为.jpg",price:"19999元"},
+                {name:"华为3",image:"./image/华为.jpg",price:"19999元"},
+                {name:"华为4",image:"./image/华为.jpg",price:"19999元"},
+            ]},
+            methods:{}
+        })
+    vm.msg.push({name:"笑脸",image:"./image/aaa.jpg",price:"19999元"})
+    Vue.set(vm.msg,2,{name:"小米",image:"",price:"19999"})
+    vm.msg=vm.msg.slice(2)
+</script>
+<style>
+    .tupian{
+        display: flex;
+    }
+    .image-style {
+        width: 20%;
+        float: left;
+    }
+</style>
+</body>
+</html>

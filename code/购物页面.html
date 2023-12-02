@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue2.js"></script>
+    <style>
+        body {
+            padding-top: 0;
+            margin: 0;
+        }
+
+        #app { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 600px;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            max-width: 50%;
+            height: auto;
+            padding-left: 50px;
+            padding-right: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: left;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <img src="./image/华为.jpg" alt="">
+            <div>
+                <h1>全网12+512价为：{{ price | formatPrice }}</h1>
+                <h1><span>{{ date | nowdate }}</span></h1>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        Vue.filter('formatPrice', function (value) {
+            return value.toFixed(2) + ' 元';
+        });
+
+        Vue.filter('nowdate', function (value) {
+            var year = value.getFullYear();
+            var month = value.getMonth() + 1;
+            var date = value.getDate();
+            var day = value.getDay();
+            var week = "";
+            var hour = value.getHours();
+            var minute = value.getMinutes();
+            var second = value.getSeconds();
+            switch (day) {
+                case 1:
+                    week = "星期一";
+                    break;
+                case 2:
+                    week = "星期二";
+                    break;
+                case 3:
+                    week = "星期三";
+                    break;
+                case 4:
+                    week = "星期四";
+                    break;
+                case 5:
+                    week = "星期五";
+                    break;
+                case 6:
+                    week = "星期六";
+                    break;
+                default:
+                    week = "星期日";
+                    break; 
+            }
+            return "现在时间是：" + year + "年" + month + "月" + date + "日" + week + hour + "时" + minute + "分" + second + "秒";
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    price: 6999,
+                    date: new Date()
+                }
+            },
+            methods: {}
+        })
+    </script>
+</body>
+
+</html>

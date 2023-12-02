@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue2.js"></script>
+</head>
+<body>
+    <div id="app">
+        <select v-model="selectedOptions" multiple>
+            <option v-for="option in options" :value="option">{{ option }}</option>
+          </select>
+          <button @click="getSelectedOptions">获取选择的选项</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                options: ['选项1', '选项2', '选项3', '选项4'],  // 所有选项
+                selectedOptions: []  // 选择的选项
+            },
+            methods: {
+                getSelectedOptions() {
+                    console.log(this.selectedOptions);  // 获取选择的选项
+                }
+            }
+        })
+    </script>
+</body>
+</html>

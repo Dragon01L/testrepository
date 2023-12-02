@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue2.js"></script>
+    <style>
+        * {
+            margin-top: 20px;
+        }
+
+        .demo1 {
+            height: 50px;
+            background-color: skyblue;
+        }
+
+        .box1 {
+            padding: 5px;
+            background-color: skyblue;
+        }
+
+        .box2 {
+            padding: 5px;
+            background-color: orange;
+        }
+
+        .list {
+            width: 200px;
+            height: 200px;
+            background-color: peru;
+        }
+
+        li {
+            height: 100px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box1" @click.capture="showMsg(1)">
+            div1
+            <div class="box2" @click="showMsg(2)">
+                div2
+            </div>
+        </div>
+
+        <div class="demo1" @click.self="showInfo">
+            <button @click="showInfo">点我提示信息</button>
+        </div>
+        <ul @wheel="demo" class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                showInfo(e) {
+                    alert('你好！')
+                },
+                showMsg(msg) {
+                    console.log(msg)
+                },
+                demo() {
+                    console.log('@')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
